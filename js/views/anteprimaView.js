@@ -48,6 +48,7 @@ define(["jquery", "underscore", "backbone", "ractive", "raphaelext", "jel", "fil
                 //setting the original id
                 currentShape.id = shapes.at(i).id;
                 //setting the level, indicating the margin left, in order to retrieve it later
+
                 currentShape.level = level;
                 
                 this.shapes[shapes.at(i).id] = currentShape;
