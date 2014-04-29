@@ -1,71 +1,120 @@
-<!doctype html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>Jel.camel by giacomolm</title>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<title>Jel</title>
 
-    <link rel="stylesheet" href="stylesheets/styles.css">
-    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-  </head>
-  <body>
-    <div class="wrapper">
-      <header>
-        <h1>Jel.camel</h1>
-        <p>Jel instance related to Apache Camel and graphical route editing</p>
+<link rel="stylesheet" href="css/codemirror.css" type="text/css" media="screen">
+<link rel="stylesheet" href="css/bootstrap.css" type="text/css" media="screen">
+<link rel="stylesheet" href="css/jstree/jstree.min.css" type="text/css" media="screen">
+<link rel="stylesheet" href="css/style.css" type="text/css" media="screen">
+<link rel="stylesheet" href="css/scrollbar.css" type="text/css" media="screen">
+<link rel="stylesheet" href="css/raphael.pan-zoom.css" type="text/css" media="screen">
 
-        <p class="view"><a href="https://github.com/giacomolm/Jel.Camel">View the Project on GitHub <small>giacomolm/Jel.Camel</small></a></p>
+<script type="text/javascript" src="lib/jel/jel.js"></script>
+<script data-main="js/main" src="lib/require/require.js"></script>
 
+<script>
+	Jel.fn.init = function(){
 
-        <ul>
-          <li><a href="https://github.com/giacomolm/Jel.Camel/zipball/master">Download <strong>ZIP File</strong></a></li>
-          <li><a href="https://github.com/giacomolm/Jel.Camel/tarball/master">Download <strong>TAR Ball</strong></a></li>
-          <li><a href="https://github.com/giacomolm/Jel.Camel">View On <strong>GitHub</strong></a></li>
-        </ul>
-      </header>
-      <section>
-        <h3>
-<a name="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages"><span class="octicon octicon-link"></span></a>Welcome to GitHub Pages.</h3>
+		//Setting the xsd file in order to do validation
+		try{
+		  Jel.attachXSD('schema/camel.xsd');
+		  Jel.setBaseFile('xml/camelRoute.xml');
+		  Jel.setNamespace('http://camel.apache.org/schema/spring');
+		  Jel.setBaseElement('route');
+		  Jel.setXMLWrapper('routes');
+		}
+		catch(err){
+		  console.log("Problems with http xml request");
+		}
+	
+		//Adding shapes to palette
+		var shape1 = new Jel.Shape();
+		shape1.setImage("img/me.gif");
+		shape1.setName("From");
+		shape1.setMetaelement("from");
+		shape1.setPosition(70,70);		
+		Jel.paletteShapes.addShape(shape1);		
+		
+		//Adding shapes to canvas (instead dropping it graphically)
+		instance1 = Jel.Canvas.addShape(shape1);	
+		
+		var shape2 = new Jel.Shape();
+		shape2.setImage("img/mt.gif");
+		shape2.setName("Translator");
+		shape2.setPosition(240,140);
+		shape2.setMetaelement('transform');	
+		shape2.setAsComposed();
+		
+		Jel.paletteShapes.addShape(shape2);
+		
+		instance2 = Jel.Canvas.addShape(shape2);
+		
+		var shape3 = new Jel.Shape();
+		shape3.setImage("img/me.gif");
+		shape3.setName("To");
+		shape3.setPosition(400,220);
+		shape3.setMetaelement('to');
+		
+		Jel.paletteShapes.addShape(shape3);
+		
+		instance3 = Jel.Canvas.addShape(shape3);
+		
+		//Adding connections between shapes (position matters)
+		Jel.Canvas.connect(instance1, instance2);
+		
+		var shape4 = new Jel.Shape();
+		shape4.setImage("img/cbr.gif");
+		shape4.setName("Router");
+		shape4.setMetaelement('choice');
+		Jel.paletteShapes.addShape(shape4);
+		//this element is a composition of different shape
+		shape4.setAsComposed();
 
-<p>This automatic page generator is the easiest way to create beautiful pages for all of your projects. Author your page content here using GitHub Flavored Markdown, select a template crafted by a designer, and publish. After your page is generated, you can check out the new branch:</p>
+		//Processor
+		var shape5 = new Jel.Shape();
+		shape5.setImage("img/mt.gif");
+		shape5.setName("Processor");
+		shape5.setMetaelement('process');
+		Jel.paletteShapes.addShape(shape5);
 
-<pre><code>$ cd your_repo_root/repo_name
-$ git fetch origin
-$ git checkout gh-pages
-</code></pre>
+		var shape6 = new Jel.Shape();
+		shape6.setImage("img/mt.gif");
+		shape6.setName("Method");
+		shape6.setMetaelement('method');
+		Jel.paletteShapes.addShape(shape6);
 
-<p>If you're using the GitHub for Mac, simply sync your repository and you'll see the new branch.</p>
+		var filter = new Jel.Shape();
+		filter.setImage("img/mf.gif");
+		filter.setName("Filter");
+		filter.setMetaelement('filter');
+		Jel.paletteShapes.addShape(filter);
+		//this element is a composition of different shape
+		filter.setAsComposed();
+		
+	}
+</script>
 
-<h3>
-<a name="designer-templates" class="anchor" href="#designer-templates"><span class="octicon octicon-link"></span></a>Designer Templates</h3>
+</head>
 
-<p>We've crafted some handsome templates for you to use. Go ahead and continue to layouts to browse through them. You can easily go back to edit your page before publishing. After publishing your page, you can revisit the page generator and switch to another theme. Your Page content will be preserved if it remained markdown format.</p>
-
-<h3>
-<a name="rather-drive-stick" class="anchor" href="#rather-drive-stick"><span class="octicon octicon-link"></span></a>Rather Drive Stick?</h3>
-
-<p>If you prefer to not use the automatic generator, push a branch named <code>gh-pages</code> to your repository to create a page manually. In addition to supporting regular HTML content, GitHub Pages support Jekyll, a simple, blog aware static site generator written by our own Tom Preston-Werner. Jekyll makes it easy to create site-wide headers and footers without having to copy them across every page. It also offers intelligent blog support and other advanced templating features.</p>
-
-<h3>
-<a name="authors-and-contributors" class="anchor" href="#authors-and-contributors"><span class="octicon octicon-link"></span></a>Authors and Contributors</h3>
-
-<p>You can <a href="https://github.com/blog/821" class="user-mention">@mention</a> a GitHub username to generate a link to their profile. The resulting <code>&lt;a&gt;</code> element will link to the contributor's GitHub Profile. For example: In 2007, Chris Wanstrath (<a href="https://github.com/defunkt" class="user-mention">@defunkt</a>), PJ Hyett (<a href="https://github.com/pjhyett" class="user-mention">@pjhyett</a>), and Tom Preston-Werner (<a href="https://github.com/mojombo" class="user-mention">@mojombo</a>) founded GitHub.</p>
-
-<h3>
-<a name="support-or-contact" class="anchor" href="#support-or-contact"><span class="octicon octicon-link"></span></a>Support or Contact</h3>
-
-<p>Having trouble with Pages? Check out the documentation at <a href="http://help.github.com/pages">http://help.github.com/pages</a> or contact <a href="mailto:support@github.com">support@github.com</a> and we’ll help you sort it out.</p>
-      </section>
-      <footer>
-        <p>This project is maintained by <a href="https://github.com/giacomolm">giacomolm</a></p>
-        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
-      </footer>
-    </div>
-    <script src="javascripts/scale.fix.js"></script>
-    
-  </body>
+<body>
+	<div id="menu"></div>
+	<div id="dialog"></div>
+	<div id="notification"></div>
+	<div id="middle">
+		<div id="palette"><div id="paletteheader"><h5>Palette</h5></div></div>
+		<div id="tab"></div>
+		<div id="container">
+			<div id="main" ondragover="event.preventDefault()"></div>
+			<div id="dsl"></div>
+		</div>
+		<div id="rightMenu">
+			<div id="treeheader"><h5>Tree</h5></div>
+			<div id="tree" class="jstree jstree-1 jstree-default jstree-default-responsive"></div>
+			<div id="properties"></div>
+			<div id="anteprimaheader"><h5>Anteprima</h5></div>
+			<div id="anteprima"></div>
+		</div>
+	</div>
+	
+</body>
 </html>
