@@ -11,7 +11,7 @@ define(["jquery", "underscore", "backbone", "ractive", "raphaelext", "jel", "fil
     	    
         initialize: function(){
             this.paper = Raphael(this.$el[0], 1024, 800);
-            this.panZoom = this.paper.panzoom({ initialZoom: 0, initialPosition: { x: 120, y: 70}, minZoom:-15, maxZoom: 10});
+            this.panZoom = this.paper.panzoom({ initialZoom: 0, initialPosition: { x: 0, y: 0}, minZoom:-15, maxZoom: 10}); // latest pos x: 120, y: 70
             this.panZoom.enable();
 
             $(this).on("exported", this.exportHandler);
