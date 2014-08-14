@@ -372,7 +372,7 @@ define(["jquery", "underscore", "backbone", "collections/Shapes", "collections/C
 
 		import: function(){
 			if(Jel.importValue){
-				var input = Jel.xmlImport();
+				var input = Jel.xmlImport(Jel.getXMLWrapper(), Jel.getBaseElement());
 				//Jel.input = input;
 				this.index();
 			}
