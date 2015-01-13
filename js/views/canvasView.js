@@ -159,13 +159,13 @@ define(["jquery", "underscore", "backbone", "ractive", "raphaelext", "models/Sha
 		else 	shapeText = context.paper.shapeText(shape.name, undefined, shape.x||context.posX, shape.y|| context.posY, shapeEl, context,true);
 		shapeText.id = id;
 
-		var arrow = context.paper.shapeMenu("img/arrow.png", shape.x||context.posX, shape.y||context.posY, 21, 25, shape.width || 86, context, context.onselect);
+		var arrow = context.paper.shapeMenu(Jel.baseFolder+"img/arrow.png", shape.x||context.posX, shape.y||context.posY, 21, 25, shape.width || 86, context, context.onselect);
 		arrow.id = id;
-		var del = context.paper.shapeMenu("img/delete.png", shape.x||context.posX, shape.y||context.posY, 21, 25, shape.width || 86, context, context.deleteShape,-25,-18);
+		var del = context.paper.shapeMenu(Jel.baseFolder+"img/delete.png", shape.x||context.posX, shape.y||context.posY, 21, 25, shape.width || 86, context, context.deleteShape,-25,-18);
 		del.id = id;
 
 		if(shape.type == "composed"){
-			var explode = context.paper.shapeMenu("img/explode.png", shape.x||context.posX, shape.y||context.posY, 21, 25, shape.width || 86, context, context.composedHandler,-50,-18,shapeEl);
+			var explode = context.paper.shapeMenu(Jel.baseFolder+"img/explode.png", shape.x||context.posX, shape.y||context.posY, 21, 25, shape.width || 86, context, context.composedHandler,-50,-18,shapeEl);
 			explode.id = id;
 		}
 
